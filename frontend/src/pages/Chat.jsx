@@ -4,7 +4,6 @@ import axios from "axios";
 import { uniqBy } from "lodash";
 
 import Logo from "../components/Logo";
-import Avatar from "../components/Avatar";
 import Contact from "../components/Contact";
 
 const Chat = () => {
@@ -32,12 +31,14 @@ const Chat = () => {
 
     function handleMessage(e) {
         const usersData = JSON.parse(e.data);
-        console.log({ e, usersData });
+        // console.log({ e, usersData });
         if ("online" in usersData) {
             showOnlineUser(usersData.online);
         }
         else if ("text" in usersData) {
-            setMessages(prev => ([...prev, { ...usersData }]));
+            if (usersData.sender === selectedUserId) {
+                setMessages(prev => ([...prev, { ...usersData }]));
+            }
         }
     }
 
@@ -89,7 +90,7 @@ const Chat = () => {
             ws.addEventListener('close', () => {
                 const reconnectTime = 1; // 1 sec
                 setTimeout(() => {
-                    console.log(`Disconnected, Trying to reconnect in ${reconnectTime} sec`);
+                    // console.log(`Disconnected, Trying to reconnect in ${reconnectTime} sec`);
                     connectToWs();
                 }, reconnectTime * 1000);
             });
