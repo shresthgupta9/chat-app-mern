@@ -4,6 +4,8 @@ const { body, header, validationResult } = require('express-validator');
 
 const userRegisterController = require('../controllers/userRegisterController');
 const userLoginController = require('../controllers/userLoginController');
+const userGetProfileController = require('../controllers/userGetProfileController');
+const userGetAllController = require('../controllers/usersGetAllController');
 
 router.post(
     "/register",
@@ -54,5 +56,9 @@ router.post(
     },
     userLoginController
 )
+
+router.get("/profile", userGetProfileController);
+
+router.get("/allusers", userGetAllController);
 
 module.exports = router;

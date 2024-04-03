@@ -16,13 +16,19 @@ const userLoginController = asyncErrorHandler(async (req, res, next) => {
         return next(err);
     }
 
-    const isMatch = await bcrypt.compare(password, user.password);
+    // temp use
+    const isMatch = password === user.password;
     if (!isMatch) {
         const err = new CustomError("Invalid Email or Password", 404);
         return next(err);
     }
+    // const isMatch = await bcrypt.compare(password, user.password);
+    // if (!isMatch) {
+    //     const err = new CustomError("Invalid Email or Password", 404);
+    //     return next(err);
+    // }
 
-    const token = generateJWT({ userId: user._id }, 5 * 60 * 60) // 5 hr login time
+    const token = generateJWT({ userId: user._id, name: user.name }, 5 * 60 * 60) // 5 hr login time
 
     return res.status(200).json({ message: "Logged in successfully", data: { token } })
 })

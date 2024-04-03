@@ -34,7 +34,7 @@ const userRegisterController = asyncErrorHandler(async (req, res, next) => {
 
     user.password = undefined;
 
-    const token = generateJWT({ id: user._id }, 5 * 60 * 60); // 5 hr token validity
+    const token = generateJWT({ id: user._id, name }, 5 * 60 * 60); // 5 hr token validity
 
     return res.status(200).json({
         message: "User info added successfully",

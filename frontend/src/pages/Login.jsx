@@ -20,8 +20,9 @@ export default function Login() {
       );
 
       const token = res.data.data.token;
+      localStorage.removeItem("token");
       localStorage.setItem("token", token);
-      return navigate("/app");
+      return navigate("/chat");
     }
     catch (error) {
       console.log(error);
